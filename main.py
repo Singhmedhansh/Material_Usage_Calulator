@@ -4,51 +4,50 @@ main.py — Entry point and main menu loop for Material Usage Calculator
 """
 
 from datetime import datetime
-import math
 
-import calculations
-import storage
-import utils
+import calc
+import data
+import check
 
 
 def construction_flow():
     print("\n== Construction Materials (Bricks, Cement, Sand) ==")
-    L = utils.get_positive_float("Wall length (meters): ")
-    H = utils.get_positive_float("Wall height (meters): ")
-    T = utils.get_positive_float("Wall thickness (meters) (e.g. 0.10, 0.20): ")
+    L = check.get_positive_float("Wall length (meters): ")
+    H = check.get_positive_float("Wall height (meters): ")
+    T = check.get_positive_float("Wall thickness (meters) (e.g. 0.10, 0.20): ")
 
     # Bricks
-    bricks = calculations.calculate_bricks(L, H, T)
+    bricks = calc.calculate_bricks(L, H, T)
     print(f"Bricks required (including 5% wastage): {bricks} bricks")
 
     # Cement & Sand
-    cement_bags, sand_cuft = calculations.calculate_cement_and_sand(L, H, T)
+    cement_bags, sand_cuft = calc.calculate_cement_and_sand(L, H, T)
     print(f"Cement required (approx): {cement_bags} bags (50 kg each)")
     print(f"Sand required (approx): {sand_cuft:.3f} cubic feet")
 
     # Cost estimation and save
-    if utils.yes_no("Do you want to calculate cost for these materials?"):
+    if check.yes_no("Do you want to calculate cost for these materials?"):
         total_cost = 0.0
 
-        if utils.yes_no("Enter price for bricks?"):
-            price_brick = utils.get_positive_float("Price per brick (currency): ")
+        if check.yes_no("Enter price for bricks?"):
+            price_brick = check.get_positive_float("Price per brick (currency): ")
             cost = price_brick * bricks
             print(f"Bricks cost: {cost:.2f}")
-            storage.save_transaction(datetime.now().isoformat(), "Construction", "Bricks", f"{bricks}", f"{cost:.2f}")
+            data.save_transaction(datetime.now().isoformat(), "Construction", "Bricks", f"{bricks}", f"{cost:.2f}")
             total_cost += cost
 
-        if utils.yes_no("Enter price per cement bag?"):
-            price_bag = utils.get_positive_float("Price per 50kg cement bag (currency): ")
+        if check.yes_no("Enter price per cement bag?"):
+            price_bag = check.get_positive_float("Price per 50kg cement bag (currency): ")
             cost = price_bag * cement_bags
             print(f"Cement cost: {cost:.2f}")
-            storage.save_transaction(datetime.now().isoformat(), "Construction", "Cement (bags)", f"{cement_bags}", f"{cost:.2f}")
+            data.save_transaction(datetime.now().isoformat(), "Construction", "Cement (bags)", f"{cement_bags}", f"{cost:.2f}")
             total_cost += cost
 
-        if utils.yes_no("Enter price per cubic foot of sand?"):
-            price_sand = utils.get_positive_float("Price per cubic foot of sand (currency): ")
+        if check.yes_no("Enter price per cubic foot of sand?"):
+            price_sand = check.get_positive_float("Price per cubic foot of sand (currency): ")
             cost = price_sand * sand_cuft
             print(f"Sand cost: {cost:.2f}")
-            storage.save_transaction(datetime.now().isoformat(), "Construction", "Sand (cuft)", f"{sand_cuft:.3f}", f"{cost:.2f}")
+            data.save_transaction(datetime.now().isoformat(), "Construction", "Sand (cuft)", f"{sand_cuft:.3f}", f"{cost:.2f}")
             total_cost += cost
 
         print(f"Total estimated cost: {total_cost:.2f}")
@@ -75,31 +74,31 @@ def paint_flow():
     while unit not in ("ft", "m"):
         unit = input("Units? Enter 'ft' for feet or 'm' for meters (default ft): ").strip().lower() or "ft"
     if unit == "ft":
-        L = utils.get_positive_float("Room length (ft): ")
-        W = utils.get_positive_float("Room width (ft): ")
-        H = utils.get_positive_float("Room height (ft): ")
-        openings = utils.get_positive_float("Total openings area (sq ft, doors/windows) [0 if none]: ")
-        coats = utils.get_positive_int("Number of coats (default 2): ", default=2)
-        liters = calculations.calculate_paint(L, W, H, openings, coats, coverage_sqft_per_liter=100.0, units="ft")
+        L = check.get_positive_float("Room length (ft): ")
+        W = check.get_positive_float("Room width (ft): ")
+        H = check.get_positive_float("Room height (ft): ")
+        openings = check.get_positive_float("Total openings area (sq ft, doors/windows) [0 if none]: ")
+        coats = check.get_positive_int("Number of coats (default 2): ", default=2)
+        liters = calc.calculate_paint(L, W, H, openings, coats, coverage_sqft_per_liter=100.0, units="ft")
         print(f"Paint required: {liters} liters (rounded up)")
-        if utils.yes_no("Do you want to calculate cost?"):
-            price = utils.get_positive_float("Price per liter (currency): ")
+        if check.yes_no("Do you want to calculate cost?"):
+            price = check.get_positive_float("Price per liter (currency): ")
             cost = price * liters
             print(f"Estimated paint cost: {cost:.2f}")
-            storage.save_transaction(datetime.now().isoformat(), "Household", "Paint (liters)", f"{liters}", f"{cost:.2f}")
+            data.save_transaction(datetime.now().isoformat(), "Household", "Paint (liters)", f"{liters}", f"{cost:.2f}")
     else:
-        L = utils.get_positive_float("Room length (m): ")
-        W = utils.get_positive_float("Room width (m): ")
-        H = utils.get_positive_float("Room height (m): ")
-        openings = utils.get_positive_float("Total openings area (sq meters) [0 if none]: ")
-        coats = utils.get_positive_int("Number of coats (default 2): ", default=2)
-        liters = calculations.calculate_paint(L, W, H, openings, coats, coverage_sqft_per_liter=100.0, units="m")
+        L = check.get_positive_float("Room length (m): ")
+        W = check.get_positive_float("Room width (m): ")
+        H = check.get_positive_float("Room height (m): ")
+        openings = check.get_positive_float("Total openings area (sq meters) [0 if none]: ")
+        coats = check.get_positive_int("Number of coats (default 2): ", default=2)
+        liters = calc.calculate_paint(L, W, H, openings, coats, coverage_sqft_per_liter=100.0, units="m")
         print(f"Paint required: {liters} liters (rounded up)")
-        if utils.yes_no("Do you want to calculate cost?"):
-            price = utils.get_positive_float("Price per liter (currency): ")
+        if check.yes_no("Do you want to calculate cost?"):
+            price = check.get_positive_float("Price per liter (currency): ")
             cost = price * liters
             print(f"Estimated paint cost: {cost:.2f}")
-            storage.save_transaction(datetime.now().isoformat(), "Household", "Paint (liters)", f"{liters}", f"{cost:.2f}")
+            data.save_transaction(datetime.now().isoformat(), "Household", "Paint (liters)", f"{liters}", f"{cost:.2f}")
 
 
 def flooring_flow():
@@ -108,42 +107,42 @@ def flooring_flow():
     while unit not in ("ft", "m"):
         unit = input("Units? Enter 'ft' for feet or 'm' for meters (default ft): ").strip().lower() or "ft"
     if unit == "ft":
-        L = utils.get_positive_float("Floor length (ft): ")
-        W = utils.get_positive_float("Floor width (ft): ")
+        L = check.get_positive_float("Floor length (ft): ")
+        W = check.get_positive_float("Floor width (ft): ")
         tile_str = input("Tile size (e.g. '2x2' for 2ft x 2ft): ").strip()
         try:
-            tile_l, tile_w = utils.parse_tile_size(tile_str)
+            tile_l, tile_w = check.parse_tile_size(tile_str)
         except ValueError as e:
             print("Error parsing tile size:", e)
             return
-        tiles = calculations.calculate_flooring(L, W, tile_l, tile_w, units="ft")
+        tiles = calc.calculate_flooring(L, W, tile_l, tile_w, units="ft")
         print(f"Tiles required (including 5% wastage): {tiles}")
-        if utils.yes_no("Do you want to calculate cost?"):
-            price = utils.get_positive_float("Price per tile (currency): ")
+        if check.yes_no("Do you want to calculate cost?"):
+            price = check.get_positive_float("Price per tile (currency): ")
             cost = price * tiles
             print(f"Estimated flooring cost: {cost:.2f}")
-            storage.save_transaction(datetime.now().isoformat(), "Household", "Tiles", f"{tiles}", f"{cost:.2f}")
+            data.save_transaction(datetime.now().isoformat(), "Household", "Tiles", f"{tiles}", f"{cost:.2f}")
     else:
-        L = utils.get_positive_float("Floor length (m): ")
-        W = utils.get_positive_float("Floor width (m): ")
+        L = check.get_positive_float("Floor length (m): ")
+        W = check.get_positive_float("Floor width (m): ")
         tile_str = input("Tile size (e.g. '0.6x0.6' for 0.6m x 0.6m): ").strip()
         try:
-            tile_l, tile_w = utils.parse_tile_size(tile_str)
+            tile_l, tile_w = check.parse_tile_size(tile_str)
         except ValueError as e:
             print("Error parsing tile size:", e)
             return
-        tiles = calculations.calculate_flooring(L, W, tile_l, tile_w, units="m")
+        tiles = calc.calculate_flooring(L, W, tile_l, tile_w, units="m")
         print(f"Tiles required (including 5% wastage): {tiles}")
-        if utils.yes_no("Do you want to calculate cost?"):
-            price = utils.get_positive_float("Price per tile (currency): ")
+        if check.yes_no("Do you want to calculate cost?"):
+            price = check.get_positive_float("Price per tile (currency): ")
             cost = price * tiles
             print(f"Estimated flooring cost: {cost:.2f}")
-            storage.save_transaction(datetime.now().isoformat(), "Household", "Tiles", f"{tiles}", f"{cost:.2f}")
+            data.save_transaction(datetime.now().isoformat(), "Household", "Tiles", f"{tiles}", f"{cost:.2f}")
 
 
 def view_history_flow():
     print("\n== Transaction History ==")
-    storage.view_history()
+    data.view_history()
 
 
 def main():

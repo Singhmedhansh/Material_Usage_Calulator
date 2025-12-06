@@ -1,5 +1,5 @@
 """
-storage.py — CSV storage for transaction history.
+data.py — CSV storage for transaction history (history.csv).
 
 Columns:
   Timestamp, Category, Material, Quantity, Total_Cost
@@ -10,7 +10,7 @@ Uses the builtin csv module.
 import csv
 from pathlib import Path
 
-CSV_FILE = Path("project_data.csv")
+CSV_FILE = Path("history.csv")
 CSV_FIELDS = ["Timestamp", "Category", "Material", "Quantity", "Total_Cost"]
 
 
@@ -26,7 +26,7 @@ def _ensure_csv_exists():
 
 def save_transaction(timestamp: str, category: str, material: str, quantity: str, total_cost: str):
     """
-    Appends a row to project_data.csv. quantity and total_cost should be strings.
+    Appends a row to history.csv. quantity and total_cost should be strings.
     """
     _ensure_csv_exists()
     with CSV_FILE.open("a", newline="", encoding="utf-8") as f:
@@ -42,7 +42,7 @@ def save_transaction(timestamp: str, category: str, material: str, quantity: str
 
 def view_history():
     """
-    Reads project_data.csv and prints a nicely formatted table to console.
+    Reads history.csv and prints a nicely formatted table to console.
     """
     _ensure_csv_exists()
     rows = []

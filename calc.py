@@ -1,5 +1,5 @@
 """
-calculations.py — contains all math formulas for construction and household calculations.
+calc.py — contains all math formulas for construction and household calculations.
 """
 
 import math

@@ -1,5 +1,5 @@
 """
-utils.py — input validation helpers to make the app robust against bad user input.
+check.py — input validation helpers to make the app robust against bad user input.
 """
 
 from typing import Tuple

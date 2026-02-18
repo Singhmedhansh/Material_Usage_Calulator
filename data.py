@@ -71,3 +71,12 @@ def view_history():
     for r in rows:
         line = " | ".join(f"{str(r.get(c,'')):{widths[c]}}" for c in cols)
         print(line)
+
+
+def clear_history():
+    """
+    Clears all transaction rows from history.csv while keeping the header.
+    """
+    with CSV_FILE.open("w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=CSV_FIELDS)
+        writer.writeheader()

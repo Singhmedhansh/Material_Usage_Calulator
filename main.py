@@ -145,6 +145,15 @@ def view_history_flow():
     data.view_history()
 
 
+def clear_history_flow():
+    print("\n== Clear Transaction History ==")
+    if check.yes_no("Are you sure you want to delete all previous transactions?"):
+        data.clear_history()
+        print("All transactions have been cleared.")
+    else:
+        print("Clear history cancelled.")
+
+
 def main():
     print("Welcome — Material Usage Calculator (College Project)")
     while True:
@@ -152,8 +161,9 @@ def main():
         print("1. Construction Materials (Bricks, Cement, Sand)")
         print("2. Household Renovation (Paint, Flooring)")
         print("3. View Transaction History")
-        print("4. Exit")
-        choice = input("Select [1-4]: ").strip()
+        print("4. Clear All Previous Transactions")
+        print("5. Exit")
+        choice = input("Select [1-5]: ").strip()
         if choice == "1":
             construction_flow()
         elif choice == "2":
@@ -161,10 +171,12 @@ def main():
         elif choice == "3":
             view_history_flow()
         elif choice == "4":
+            clear_history_flow()
+        elif choice == "5":
             print("Exiting. Goodbye.")
             break
         else:
-            print("Invalid option. Please enter 1-4.")
+            print("Invalid option. Please enter 1-5.")
 
 
 if __name__ == "__main__":

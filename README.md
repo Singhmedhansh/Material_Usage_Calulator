@@ -1,40 +1,41 @@
 # Material Usage Calculator
 
-Simple terminal-based Material Usage Calculator for construction and household renovation tasks. This project is a college assignment scaffold for calculating materials, estimating costs and saving transactions.
+Terminal-based calculator for construction and household renovation estimates.
+It calculates material quantities, supports optional cost estimation, and stores
+transactions in CSV format.
 
-## Files
-- `main.py` — entrypoint and interactive menu (Construction, Household, History).
-- `calculations.py` — all math formulas for bricks, cement, sand, paint and flooring.
-- `storage.py` — CSV-based storage for transactions (`project_data.csv`).
-- `utils.py` — input validation helpers to avoid crashes.
+## Current project files
+- `main.py` — app entry point and menu flow.
+- `calc.py` — all formulas (bricks, cement/sand, paint, flooring).
+- `check.py` — input validation helpers.
+- `data.py` — CSV storage helpers.
+- `history.csv` — saved transaction history.
+- `sample inputs/` — sample assets/files.
+
+## Features
+- Construction mode: bricks, cement bags, and sand (cu ft).
+- Household mode: paint and flooring tile calculations.
+- Optional cost calculation after each estimate.
+- View and clear transaction history from the menu.
 
 ## Quick start
+Prerequisites: Python 3.8+ (no external dependencies).
 
-Prerequisites: Python 3.8+ (no external libraries required).
-
-Run from the project root:
+Run from project root:
 
 ```powershell
 python main.py
 ```
 
-Follow the on-screen prompts. When you calculate a cost, the transaction is saved to `project_data.csv`.
+## Transaction file
+All saved records are written to `history.csv` with columns:
 
-## Transaction CSV
-- `project_data.csv` columns: `Timestamp, Category, Material, Quantity, Total_Cost`.
-- Use the "View Transaction History" menu option to inspect saved transactions.
+`Timestamp, Category, Material, Quantity, Total_Cost`
 
-## Team
-- Team Member 1: Name
-- Team Member 2: Name
-- Team Member 3: Name
-- Team Member 4: Name
+Use **View Transaction History** in the app menu to display saved records.
 
-Replace the placeholder names with your team members' names.
-
-## Development notes
-- The calculations are implemented in `calculations.py` and should be covered by unit tests (not included).
-- To add tests, create a `tests/` folder and use `pytest` or `unittest`.
-
-## License
-Add a license file if you plan to publish this repository.
+## Team Members
+- Medhansh Pratap Singh — USN: RVCE25BAI015
+- Ishan Jain — USN: RVCE25BAI184
+- Namya K M — USN: RVCE25BAI175
+- Medha Swetha Muguda — USN: RVCE25BAI072
